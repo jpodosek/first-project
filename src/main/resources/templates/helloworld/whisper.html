@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ pageTitle }}</title>
+    <link rel="stylesheet" href="/site.css">
+  </head>
+  <body>
+   <a href="/">Back home</a>
+   <br>
+    <h1>WHAT? I CAN'T HEAR YOU</h1>
+    <p>
+      <b>Message:</b>
+      {{ whispermessageDisplayText }} <!--  anything with mustache must be added to model -->
+    </p>
+    {{> helloworld/message-form2 }}
+    {{> helloworld/adder-form }}
+    {{> helloworld/subtractor-form }}
+  </body>
+</html>
