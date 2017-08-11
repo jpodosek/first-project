@@ -11,7 +11,7 @@ import com.example.demo.models.Yeller;
 import com.example.demo.models.Whisperer;
 
 @Controller
-@RequestMapping({ "/", "/HelloWorld" }) // allows us to map same controller to more than one path; aka home directory
+@RequestMapping({ "/HelloWorld" }) // allows us to map same controller to more than one path; aka home directory
 										// (/) OR /HelloWorld will both map to same controller
 public class HelloWorldController {
 
@@ -21,10 +21,7 @@ public class HelloWorldController {
 		title = "Hello Java and Spring!";
 	}
 
-	@GetMapping("")
-	public String index() {
-		return "helloworld/index"; // return file to render
-	}
+	
 
 	// Yeller Model
 	@GetMapping("message-path") // URL to which form submits; gets invoked when message is passed in browser
