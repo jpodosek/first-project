@@ -13,29 +13,29 @@ import com.example.demo.models.Subtractor;
 
 @Controller
 @RequestMapping({ "/", "/math" }) // this allows http://localhost:8080/math/adder to work ; without, adder only
-// works at http://localhost:8080/adder
+									// works at http://localhost:8080/adder
 public class MathController {
 	private String pageTitle;
 	private Model model;
+	private int leftVal = 0;
+	private double rightVal = 0.00, result = 0.00;
+	private String operationTextDisplay = null;
 
 	public MathController() {
 		pageTitle = "Calculator";
 	}
-
-	@GetMapping("") // default
-	public String index(Model model) {
-		this.model = model;
-		this.model.addAttribute("pageTitle", pageTitle);
-		return "math/index"; // return file to render
-	}
-
-	@GetMapping("math/calculate") // what to do if user directly goes to /math/calculate
-	public String mathCalculatePath(Model model) {
-		double result = 0.00;
-		this.model = model;
-		this.model.addAttribute("pageTitle", pageTitle);
-		this.model.addAttribute("output", result); // "output" is the variable name mustache  uses	
-		return "math/calculate"; // return file to render }
+	
+	// what to do if user directly goes to math/calculate
+	//this takes default empty values from instance variables above and plugs them into model, so mustache can render
+	@GetMapping("math/calculate") 
+	public String mathCalculatePath(Model m) {
+		this.model = m;
+		this.model.addAttribute("leftVal", this.leftVal);
+		this.model.addAttribute("rightVal", this.rightVal);
+		this.model.addAttribute("operationText", this.operationTextDisplay);
+		this.model.addAttribute("output", this.result); // "output" is the variable name mustache uses // to display
+														// result
+		return "math/index"; // ; tells Mustache to go to "adder-form"
 	}
 
 	@PostMapping("adder")
@@ -70,49 +70,58 @@ public class MathController {
 	@PostMapping("math/calculate")
 	public String performCalculation(@RequestParam(name = "leftval") int left,
 			@RequestParam(name = "rightval") double right, @RequestParam(name = "operation") String operation,
-			Model theThingIPutDataIntoForTheView) {
-		int leftVal = left;
-		double rightVal = right;
-		double result = 0.00;
+			Model model) {
+		this.leftVal = left;
+		this.rightVal = right;
+		this.model = model;
 		Calculator calc = new Calculator(leftVal, rightVal);
-		// this.theThingIPutDataIntoForTheView = theThingIPutDataIntoForTheView;
+
 		if (operation.equals("add")) {
-			result = calc.getAddResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getAddResult();
+			this.operationTextDisplay = "plus";
+
 		}
 
 		else if (operation.equals("subtract")) {
-			result = calc.getSubtractResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getSubtractResult();
+			this.operationTextDisplay = "minus";
+
 		}
 
 		else if (operation.equals("multiply")) {
-			result = calc.getMultiplyResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getMultiplyResult();
+			this.operationTextDisplay = "mutilpied by";
+
 		}
 
 		else if (operation.equals("divide")) {
-			result = calc.getDivideResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getDivideResult();
+			this.operationTextDisplay = "divided by";
 		}
 
 		else if (operation.equals("modulo")) {
-			result = calc.getModuloResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getModuloResult();
+			this.operationTextDisplay = "mod";
+
 		}
 
 		else if (operation.equals("exponent")) {
-			result = calc.getExponentResult();
-			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+			this.result = calc.getExponentResult();
+			this.operationTextDisplay = "to the power of";
 		}
 
 		else {
 			System.out.println("No valid operation entered");
-			result = 0.00;
+			this.result = 0.00;
+			this.operationTextDisplay = "none";
 		}
+		this.model.addAttribute("leftVal", this.leftVal);
+		this.model.addAttribute("rightVal", this.rightVal);
+		this.model.addAttribute("operationText", this.operationTextDisplay);
+		this.model.addAttribute("output", this.result); // "output" is the variable name mustache uses // to display
+														// result
 
-		theThingIPutDataIntoForTheView.addAttribute("output", result); // "output" is the variable name mustache  uses																// to display result"
-		theThingIPutDataIntoForTheView.addAttribute("pageTitle", pageTitle);
+		this.model.addAttribute("pageTitle", pageTitle);
 		return "math/calculate";
 	}
 
