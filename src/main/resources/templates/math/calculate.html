@@ -1,12 +1,13 @@
 <!doctype html>
 <html>
   <head>
-  
+   <title>{{ pageTitle }}</title>
     <link rel="stylesheet" href="/site.css">
   </head>
   <body> 
+   <h1>CALCULATOR</h1>
      <h2>Your Result: {{ output }}</h2> <!--  anything with mustache must be added to model -->
-     <br>
+	<br>
    <p>{{> math/calculate-form }}</p>
   </body>
 </html>

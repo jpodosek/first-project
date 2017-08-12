@@ -10,17 +10,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.models.Adder;
 import com.example.demo.models.Calculator;
 import com.example.demo.models.Subtractor;
-import com.example.demo.models.Whisperer;
-import com.example.demo.models.Yeller;
 
 @Controller
 @RequestMapping({ "/", "/math" }) // this allows http://localhost:8080/math/adder to work ; without, adder only
 // works at http://localhost:8080/adder
 public class MathController {
+	private String pageTitle;
+	private Model model;
+
+	public MathController() {
+		pageTitle = "Calculator";
+	}
 
 	@GetMapping("") // default
-	public String index() {
+	public String index(Model model) {
+		this.model = model;
+		this.model.addAttribute("pageTitle", pageTitle);
 		return "math/index"; // return file to render
+	}
+
+	@GetMapping("math/calculate") // what to do if user directly goes to /math/calculate
+	public String mathCalculatePath(Model model) {
+		double result = 0.00;
+		this.model = model;
+		this.model.addAttribute("pageTitle", pageTitle);
+		this.model.addAttribute("output", result); // "output" is the variable name mustache  uses	
+		return "math/calculate"; // return file to render }
 	}
 
 	@PostMapping("adder")
@@ -52,44 +67,53 @@ public class MathController {
 
 	// Assignment
 	// This logic will take form input of calculate and determine what to route
-	@PostMapping("math/calculate") 
-	public String performCalculation(@RequestParam(name = "leftval") int left, @RequestParam(name = "rightval") double right, @RequestParam(name = "operation") String operation, Model theThingIPutDataIntoForTheView)
-	{
-			int leftVal = left;
-			double rightVal = right;
-			Calculator calc = new Calculator(leftVal, rightVal);
-			double result;	
+	@PostMapping("math/calculate")
+	public String performCalculation(@RequestParam(name = "leftval") int left,
+			@RequestParam(name = "rightval") double right, @RequestParam(name = "operation") String operation,
+			Model theThingIPutDataIntoForTheView) {
+		int leftVal = left;
+		double rightVal = right;
+		double result = 0.00;
+		Calculator calc = new Calculator(leftVal, rightVal);
+		// this.theThingIPutDataIntoForTheView = theThingIPutDataIntoForTheView;
 		if (operation.equals("add")) {
 			result = calc.getAddResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);		
-		} 
-		
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+		}
+
 		else if (operation.equals("subtract")) {
 			result = calc.getSubtractResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);		
-		} 
-		
-		else if (operation.equals("divide")) {
-			result = calc.getDivideResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);	
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
 		}
-		
+
 		else if (operation.equals("multiply")) {
 			result = calc.getMultiplyResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);	
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
 		}
-		
+
+		else if (operation.equals("divide")) {
+			result = calc.getDivideResult();
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
+		}
+
 		else if (operation.equals("modulo")) {
 			result = calc.getModuloResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);	
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
 		}
-		
+
 		else if (operation.equals("exponent")) {
 			result = calc.getExponentResult();
-			theThingIPutDataIntoForTheView.addAttribute("output", result);	
+			// theThingIPutDataIntoForTheView.addAttribute("output", result);
 		}
-		
+
+		else {
+			System.out.println("No valid operation entered");
+			result = 0.00;
+		}
+
+		theThingIPutDataIntoForTheView.addAttribute("output", result); // "output" is the variable name mustache  uses																// to display result"
+		theThingIPutDataIntoForTheView.addAttribute("pageTitle", pageTitle);
 		return "math/calculate";
-		}
-		
+	}
+
 }

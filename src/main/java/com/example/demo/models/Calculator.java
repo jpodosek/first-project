@@ -9,8 +9,8 @@ public class Calculator {
 			
 		add = first + second;
 		subtract = first - second;
-		divide = first / second;
 		multiply = first * second;
+		divide = first / second;
 		modulo = first % second;
 		exponent = Math.pow(first, second);	
 	}
@@ -23,12 +23,12 @@ public class Calculator {
 		return subtract;
 	}
 	
-	public double getDivideResult() {
-		return divide;
-	}
-	
 	public double getMultiplyResult() {
 		return multiply;
+	}
+	
+	public double getDivideResult() {
+		return divide;
 	}
 	
 	public double getModuloResult() {

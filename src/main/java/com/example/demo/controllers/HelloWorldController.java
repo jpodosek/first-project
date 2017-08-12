@@ -69,7 +69,6 @@ public class HelloWorldController {
 			String quiet = whisper1.makeQuiet();
 			theThingIPutDataIntoFoTheView.addAttribute("output", quiet);
 			}
-			//make submittedMessage quiet
 		return "helloworld/mixed-messages";
 		}
 	
