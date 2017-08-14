@@ -2,9 +2,9 @@ package com.example.demo.models;
 
 public class Calculator {
 
-	public int leftVal = 0;
-	public double rightVal = 0.00;
-	public String operation = null, opDisplayText = null;
+	private int leftVal = 0;
+	private double rightVal = 0.00;
+	private String operation = null, opDisplayText = null;
 
 	public Calculator(int left, double right, String operation) {
 		this.leftVal = left;
@@ -42,7 +42,7 @@ public class Calculator {
 				this.opDisplayText = "to the power of";
 				return Math.pow(leftVal, rightVal);
 			
-				default:
+			default:
 				this.opDisplayText = "plus";
 				return 0.00;
 		}
@@ -52,4 +52,6 @@ public class Calculator {
 		return this.opDisplayText;
 	}
 
-}
+}		
+
+
