@@ -11,13 +11,9 @@ import com.example.demo.models.Calculator;
 import com.example.demo.models.Subtractor;
 
 @Controller
-@RequestMapping({ "/", "/math"}) 
+@RequestMapping({ "/", "/math"}) //  all of the URL paths that this controller will handle will start with either of these
 public class MathController {
 	private String pageTitle;
-//	private Model model;
-	//int leftVal;
-	//double rightVal;
-	//String operation;
 	
 	//Constructor
 	public MathController() {
@@ -25,7 +21,7 @@ public class MathController {
 	}
 
 	
-	@GetMapping("") // URL to which form submits; gets invoked when message is passed in browser
+	@GetMapping({"", "calculate"}) // URL to which form submits; gets invoked when message is passed in browser
 	public String showIndex() {
 		return "math/index"; // ; reroute user to index page if they try to hit math/calculate directly
 	}
@@ -40,9 +36,6 @@ public class MathController {
 									, Model model) 
 	{
 		
-		//this.leftVal = left;
-		//this.rightVal = right;
-		//this.operation = operation;
 		Calculator calc1 = new Calculator(left, right, operation); // add parameters from form's Post attributes;
 		double result = calc1.Calculate();
 		model.addAttribute("pageTitle", this.pageTitle);

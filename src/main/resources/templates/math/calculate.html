@@ -1,14 +1,23 @@
 <!doctype html>
 <html>
-  <head>
-   <title>{{ pageTitle }}</title>
-    <link rel="stylesheet" href="/site.css">
-  </head>
-  <body> 
-   <h1>CALCULATOR</h1>
-   <a href="/">Back home</a>
-     <h2> {{ leftVal }} {{ operationText}} {{ rightVal }} =  {{ output }}</h2> 
-   <p>{{> math/calculate-form }}</p>
-  </body>
+<head>
+<title>{{ pageTitle }}</title>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+	<h1>THE DO MATH GOOD-ER</h1>
+	<h2>Result: {{ output }}</h2>
+	{{ leftVal }}&nbsp;
+	<i>{{ operationText}}&nbsp; </i>{{ rightVal }}&nbsp; = &nbsp;
+	<b>{{ output }} (duh)</b>
+	<br>
+	<br>
+	<h3>Here: calculate some more stuff that you "would" do in your
+		head, if you didn't suck so bad at math:</h3>
+	<p>{{> math/calculate-form }}</p>
+	<br>
+	<br>
+	<a href="/">Back home</a>
+</body>
 </html>
 
