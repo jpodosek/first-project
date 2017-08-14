@@ -25,7 +25,7 @@ public class MathController {
 	}
 
 	
-	@GetMapping("calculate") // URL to which form submits; gets invoked when message is passed in browser
+	@GetMapping("") // URL to which form submits; gets invoked when message is passed in browser
 	public String showIndex() {
 		return "math/index"; // ; reroute user to index page if they try to hit math/calculate directly
 	}
@@ -33,7 +33,7 @@ public class MathController {
 	
 	// Assignment
 	// This logic will take form input of calculate and determine what to route
-	@PostMapping("math/calculate")
+	@PostMapping("calculate")
 	public String performCalculation(@RequestParam(name = "leftval") int left
 									,@RequestParam(name = "rightval") double right
 									, @RequestParam(name = "operation") String operation
